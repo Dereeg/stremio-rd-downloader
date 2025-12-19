@@ -23,7 +23,18 @@ class RealDebrid {
             const error = await response.text();
             throw new Error(`RD API Error: ${response.status} - ${error}`);
         }
-        return response.json();
+        
+        // Handle 204 No Content responses (like selectFiles)
+        if (response.status === 204) {
+            return { success: true };
+        }
+        
+        const text = await response.text();
+        if (!text) {
+            return { success: true };
+        }
+        
+        return JSON.parse(text);
     }
 
     async checkInstantAvailability(hashes) {
