@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/:apiKey/manifest.json", "destination": "/api/manifest?apiKey=:apiKey" },
-    { "source": "/:apiKey/stream/:type/:id.json", "destination": "/api/stream?apiKey=:apiKey&type=:type&id=:id" },
-    { "source": "/download/:apiKey/:data", "destination": "/api/download?apiKey=:apiKey&data=:data" },
-    { "source": "/configure", "destination": "/api/configure" },
-    { "source": "/", "destination": "/api/configure" }
+  "routes": [
+    { "src": "^/$", "dest": "/api/configure" },
+    { "src": "^/configure$", "dest": "/api/configure" },
+    { "src": "^/download/([^/]+)/([^/]+)$", "dest": "/api/download?apiKey=$1&data=$2" },
+    { "src": "^/([^/]+)/manifest.json$", "dest": "/api/manifest?apiKey=$1" },
+    { "src": "^/([^/]+)/stream/(movie|series)/(.+).json$", "dest": "/api/stream?apiKey=$1&type=$2&id=$3" }
   ]
 }
